@@ -1,23 +1,14 @@
-(mirrored on [GitHub][GitHub mirror])
+`cproc` is a [C11] compiler using [QBE] as a backend.
 
-[![builds.sr.ht status](https://builds.sr.ht/~mcf/cproc/commits/master.svg)](https://builds.sr.ht/~mcf/cproc/commits/master)
+Some [C23 features] and [GNU C extensions] are implemented.
 
-`cproc` is a [C11] compiler using [QBE] as a backend. It is released
-under the [ISC] license.
-
-Some [C23 features] and [GNU C extensions] are also implemented.
-
-There is still much to do, but it currently implements most of the
+It currently implements most of the
 language and is capable of [building software] including itself, mcpp,
 gcc 4.7, binutils, and more.
 
-It was inspired by several other small C compilers including [8cc],
-[c], [lacc], and [scc].
-
 ## Requirements
 
-The compiler itself is written in standard C99 and can be built with
-any conforming C99 compiler.
+The compiler itself is written in C99 and can be built with any conforming C99 compiler.
 
 The POSIX driver depends on POSIX.1-2008 interfaces, and the `Makefile`
 requires a POSIX-compatible make(1).
@@ -87,40 +78,14 @@ specified in `config.h`.
 - Generation of position independent code (i.e. shared libraries,
   modules, PIEs).
 
-## Mailing list
-
-There is a mailing list at [~mcf/cproc@lists.sr.ht]. Feel free to
-use it for general discussion, questions, patches, or bug reports
-(if you don't have an sr.ht account).
-
-## Issue tracker
-
-Please report any issues to [~mcf/cproc@todo.sr.ht].
-
-## Contributing
-
-Patches are greatly appreciated. Send them to the mailing list
-(preferred), or as pull-requests on the [GitHub mirror].
-
 [QBE]: https://c9x.me/compile/
 [C11]: http://port70.net/~nsz/c/c11/n1570.html
-[ISC]: https://git.sr.ht/~mcf/cproc/blob/master/LICENSE
 [C23 features]: https://man.sr.ht/~mcf/cproc/doc/c23.md
 [GNU C extensions]: https://man.sr.ht/~mcf/cproc/doc/extensions.md
 [building software]: https://man.sr.ht/~mcf/cproc/doc/software.md
-[8cc]: https://github.com/rui314/8cc
-[c]: https://github.com/andrewchambers/c
-[lacc]: https://github.com/larmel/lacc
-[scc]: http://www.simple-cc.org/
-[5.2.1.1]: http://port70.net/~nsz/c/c11/n1570.html#5.2.1.1
 [6.4.6p3]: http://port70.net/~nsz/c/c11/n1570.html#6.4.6p3
 [#1]: https://todo.sr.ht/~mcf/cproc/1
 [#3]: https://todo.sr.ht/~mcf/cproc/3
 [#5]: https://todo.sr.ht/~mcf/cproc/5
 [#6]: https://todo.sr.ht/~mcf/cproc/6
 [#7]: https://todo.sr.ht/~mcf/cproc/7
-[#35]: https://todo.sr.ht/~mcf/cproc/35
-[#44]: https://todo.sr.ht/~mcf/cproc/44
-[~mcf/cproc@lists.sr.ht]: https://lists.sr.ht/~mcf/cproc
-[~mcf/cproc@todo.sr.ht]: https://todo.sr.ht/~mcf/cproc
-[GitHub mirror]: https://github.com/michaelforney/cproc
