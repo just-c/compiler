@@ -1,31 +1,23 @@
 
-`cproc` is a [C11] compiler using [QBE] as a backend.
+`cproc` is a [C11] compiler. It uses the [QBE] backend.
 
 Some C23 features and GNU C extensions are implemented.
 
-It currently implements most of the
-language and is capable of building software including itself, mcpp,
-gcc 4.7, binutils, and more.
+It implements most of the c language and is capable of building software including itself, gcc 4.7, binutils, and more.
 
 # Requirements
 
 The compiler itself is written in C99 and can be built with any conforming C99 compiler.
 
-The POSIX driver depends on POSIX.1-2008 interfaces, and the `Makefile`
-requires a POSIX-compatible make(1).
+The POSIX driver depends on POSIX.1-2008 interfaces, and the `Makefile` requires a POSIX-compatible make(1).
 
-At runtime, you will need QBE, an assembler, and a linker for the
-target system. Since the preprocessor is not yet implemented, an
-external one is currently required as well.
+At runtime, you need QBE, an assembler, and a linker for the target system. Since the preprocessor is not yet implemented, an external one is required.
 
 # Supported targets
 
-All architectures supported by QBE should work (currently x86\_64,
-aarch64, and riscv64).
+All architectures supported by QBE should work (x86\_64, aarch64, and riscv64).
 
-The following targets are tested by the continuous build and known to
-bootstrap and pass all tests:
-
+These targets are known to bootstrap and pass all tests:
 - `x86_64-linux-musl`
 - `x86_64-linux-gnu`
 - `x86_64-freebsd`
@@ -53,9 +45,7 @@ string arrays (`static char *[]`):
 You may also want to customize your environment or `config.mk` with the
 appropriate `CC`, `CFLAGS` and `LDFLAGS`.
 
-Once this is done, you can build with
-
-	make
+Once this is done, you can build with `make`.
 
 # Bootstrap
 
