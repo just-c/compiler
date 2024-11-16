@@ -1,29 +1,24 @@
 
 `cproc` is a [C11] compiler. It uses the [QBE] backend.
 
-Some C23 features and GNU C extensions are implemented.
-
 It implements most of the c language and is capable of building software including itself, gcc 4.7, binutils, and more.
+
+One of the goals of cproc is to compile the entire oasis linux system (excluding kernel and libc).
+
+Many packages have patches to fix various ISO C conformance issues, enabling them to be built.
+
+See the [oasis #13] for the current status of this effort, and the
+patch directories in the [oasis package tree] for any patches used.
 
 # Requirements
 
-The compiler itself is written in C99 and can be built with any conforming C99 compiler.
+The compiler itself is written in C99.
 
-The POSIX driver depends on POSIX.1-2008 interfaces, and the `Makefile` requires a POSIX-compatible make(1).
+At runtime, you need QBE, an assembler, and a linker for the target system. The preprocessor is not yet implemented; an external one is required.
 
-At runtime, you need QBE, an assembler, and a linker for the target system. Since the preprocessor is not yet implemented, an external one is required.
+# Targets
 
-# Supported targets
-
-All architectures supported by QBE should work (x86\_64, aarch64, and riscv64).
-
-These targets are known to bootstrap and pass all tests:
 - `x86_64-linux-musl`
-- `x86_64-linux-gnu`
-- `x86_64-freebsd`
-- `aarch64-linux-musl`
-- `aarch64-linux-gnu`
-- `riscv64-linux-gnu`
 
 # Building
 
@@ -69,106 +64,25 @@ specified in `config.h`.
 - Generation of position independent code (i.e. shared libraries,
   modules, PIEs).
   
-# Oasis
-
-One of the main goals of cproc is to compile the entire oasis linux
-system (excluding kernel and libc). This is a work in progress, but many
-packages have patches to fix various ISO C conformance issues, enabling
-them to be built.
-
-See the [oasis #13] for the current status of this effort, and the
-patch directories in the [oasis package tree] for any patches used.
-
-# C23 status
-
-cproc implements some C23 features applied to the latest drafts.
+# Implemented C23 features
 
 ## [N2265]: `_Static_assert` without message
-
-C11 required that static assertions always contained a message. C23
-now allows `_Static_assert` with just an expression.
-
 ## [N2418]: UTF-8 character constants
-
-C23 introduces UTF-8 character constants using the syntax `u8'a'`.
-Compared to an unprefixed character constant, they have type `unsigned
-char` instead of `int`, and are guaranteed to use UTF-8 encoding
-rather than the execution character set. Since the character in a
-UTF-8 character constant must have a single-byte UTF-8 encoding,
-this type of character constant could be useful when you need the
-ASCII value of a character, but do not want to depend on any
-particular execution character set.
-
 ## [N2508]: Free positioning of labels inside compound statements
-
-In previous revisions of C, labels like `foo:`, `case 123:`, or
-`default:` could only precede statements. This was relaxed in C23,
-and they can now appear intermixed with declarations in compound
-statements.
-
 ## [N2510]: Allow unnamed parameters in a function definition
-
-C23 allows you to omit the name of a parameter in the prototype of
-a function definition that does not use that parameter.
-
 ## [N2549]: Binary integer constants
-
-C23 allows binary integer constants in addition to octal, decimal,
-and hexadecimal, using syntax like `0b01101011`.
-
 ## [N2900]: Consistent, warningless, and intuitive initialization with {}
-
-C23 allows empty initializers to initialize an object as if it had
-static storage duration.
-
 ## [N2927]: Not-so-magic typeof for C
-
-C23 adds the `typeof(E)` type specifier to specify type of expression
-`E`. Arrays and function designator expressions do not decay into
-pointers, just like when used with `sizeof`. You can use a typename
-with `typeof` to specify that same type.
-
-C23 also introduces `typeof_unqual`, which behaves the same as
-`typeof` except that the specified type is unqualified.
-
 ## [N2975]: Relax requirements for variadic parameter lists
-
-C23 allows variadic functions with no named parameters. The second
-argument to the va_arg macro is now optional and is only used for
-backwards compatibility.
-
 ## [N3029]: Improved Normal Enumerations
-
-C23 allows enumerators outside the range of `int`. When an enum
-type contains such an enumerator, its type during processing of the
-enum is the type of the initializing expression, or the type of the
-previous enumerator if there is no initializing expression. In the
-latter case, if the type of the previous enumerator can't represent
-the current value, an integer type with the same signedness capable
-of representing the value is chosen. Outside of an enum containing
-a large enumerator, the types of all enumerators are changed to the
-the enum type.
-
 ## [N3030]: Enhancements to Enumerations
 
-C23 allows enum types with fixed underlying types using syntax like
-`enum E : unsigned long`. These enum types are compatible with the
-underlying type, and all enumerator constants have the enum type.
-
-Enum types with fixed underlying types are complete by the end of
-the underlying type specifier, so they can be forward-declared and
-used inside the enum.
-
-# Extensions
-
-In addition to C11, several [GNU extensions] are implemented. The extensions below are implemented.
+# Implemented [GNU extensions]
 
 ## `__asm__` labels
 
 A declarator can be followed by `__asm__("somelabel")` to specify the
-assembler name of the object or function. This name is taken literally, so
-the resulting symbol will not be mangled according to the target's usual
-rules. The name may contain characters not allowed in regular identifiers.
+assembler name of the object or function. This name is taken literally, so the resulting symbol will not be mangled according to the target's usual rules.
 
 ## Built-in functions and types
 
