@@ -77,52 +77,6 @@ case "$target" in
 	fi
 	linkflags='"-L", "'$gcclibdir'",'
 	;;
-*-*freebsd*)
-	: ${DEFAULT_DYNAMIC_LINKER:=/libexec/ld-elf.so.1}
-	startfiles='"-l", ":crt1.o", "-l", ":crti.o"'
-	endfiles='"-l", "c", "-l", ":crtn.o"'
-	linkflags='"-L", "/usr/lib",'
-	defines='
-	"-D", "_Pragma(x)=",
-	"-D", "_Nullable=",
-	"-D", "_Nonnull=",
-
-	"-D", "__GNUCLIKE_BUILTIN_STDARG",
-	"-D", "__GNUCLIKE_BUILTIN_VARARGS",
-
-	/* required to define _RuneLocale, needed by xlocale/_ctype.h */
-	"-D", "_USE_CTYPE_INLINE_",
-	/* workaround for #42 */
-	"-D", "_XLOCALE_INLINE=static inline",
-	/* used like attribute after declarator, so _Alignas will not work here */
-	"-D", "__aligned(x)=",
-	/* TLS is not yet supported (#8) */
-	"-D", "__NO_TLS",
-
-	/* disable warnings for redefining _Pragma */
-	"-Wno-builtin-macro-redefined",
-'
-	;;
-*-*openbsd*)
-	: ${DEFAULT_DYNAMIC_LINKER:=/usr/libexec/ld.so}
-	test "$host" = "$target" && : ${DEFAULT_PREPROCESSOR:=/usr/libexec/cpp}
-	startfiles='"-l", ":crt0.o", "-l", ":crtbegin.o"'
-	endfiles='"-l", "c", "-l", ":crtend.o"'
-	linkflags='"-L", "/usr/lib", "-nopie",'
-	defines='
-	/* required to prevent libc headers from declaring functions with conflicting linkage */
-	"-D", "_ANSI_LIBRARY",
-
-	/* used like attribute after declarator, so _Alignas will not work here */
-	"-D", "__aligned(x)=",
-'
-	;;
-*-*netbsd*)
-	: ${DEFAULT_DYNAMIC_LINKER:=/usr/libexec/ld.elf_so}
-	startfiles='"-l", ":crt0.o", "-l", ":crti.o"'
-	endfiles='"-l", "c", "-l", ":crtn.o"'
-	defines='"-D", "__builtin_stdarg_start(ap, last)=__builtin_va_start(ap, last)"'
-	;;
 *)
 	fail "unknown target '$target', please create config.h manually"
 esac
