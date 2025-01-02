@@ -42,17 +42,6 @@ appropriate `CC`, `CFLAGS` and `LDFLAGS`.
 
 Once this is done, you can build with `make`.
 
-# Bootstrap
-
-The `Makefile` includes several other targets that can be used for
-bootstrapping. These targets require the ability to run the tools
-specified in `config.h`.
-
-- **`stage2`**: Build the compiler with the initial (`stage1`) output.
-- **`stage3`**: Build the compiler with the `stage2` output.
-- **`bootstrap`**: Build the `stage2` and `stage3` compilers, and verify
-  that they are byte-wise identical.
-
 # What's missing
 
 - Digraph sequences ([6.4.6p3], will not be implemented).
