@@ -11,14 +11,6 @@ LDFLAGS=
 
 all: cproc cproc-qbe
 
-DRIVER_SRC=\
-	driver.c\
-	util.c
-DRIVER_OBJ=$(DRIVER_SRC:%.c=$(BUILDDIR)/%.o)
-
-cproc: $(DRIVER_OBJ)
-	$(CC) $(LDFLAGS) -o $@ $(DRIVER_OBJ)
-
 SRC=\
 	attr.c\
 	decl.c\
@@ -28,6 +20,7 @@ SRC=\
 	main.c\
 	map.c\
 	pp.c\
+	qbe.c\
 	scan.c\
 	scope.c\
 	stmt.c\
@@ -36,12 +29,14 @@ SRC=\
 	tree.c\
 	type.c\
 	utf.c\
-	util.c\
-	qbe.c
+	util.c
 OBJ=$(SRC:%.c=$(BUILDDIR)/%.o)
 
-cproc-qbe: $(OBJ)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ)
+cproc: $(BUILDDIR)/driver.o $(BUILDDIR)/util.o
+	$(CC) $(LDFLAGS) -o $@ $^
+
+cproc-qbe: $(filter-out $(BUILDDIR)/driver.o, $(OBJ))
+	$(CC) $(LDFLAGS) -o $@ $^
 
 $(BUILDDIR)/%.o: %.c
 	mkdir -p $(BUILDDIR)
