@@ -1,5 +1,3 @@
 *.o
 /cproc
 /cproc-qbe
-/config.h
-/config.mk
