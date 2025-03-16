@@ -1,4 +1,5 @@
 .POSIX:
+.PHONY: all check install clean
 
 BINDIR=/usr/local/bin
 MANDIR=/usr/local/share/man
@@ -8,7 +9,6 @@ CC=cc
 CFLAGS=-std=c99 -Wall -Wpedantic -Wno-parentheses -Wno-switch -g -pipe
 LDFLAGS=
 
-.PHONY: all
 all: cproc cproc-qbe
 
 DRIVER_SRC=\
@@ -47,17 +47,14 @@ $(BUILDDIR)/%.o: %.c
 	mkdir -p $(BUILDDIR)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-.PHONY: check
 check: all
 	@CCQBE=./cproc-qbe ./runtests
 
-.PHONY: install
 install: all
 	mkdir -p $(DESTDIR)$(BINDIR)
 	cp cproc cproc-qbe $(DESTDIR)$(BINDIR)
 	mkdir -p $(DESTDIR)$(MANDIR)/man1
 	cp cproc.1 $(DESTDIR)$(MANDIR)/man1
 
-.PHONY: clean
 clean:
 	rm -rf cproc cproc-qbe $(BUILDDIR)
