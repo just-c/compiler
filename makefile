@@ -49,7 +49,7 @@ install: all
 	mkdir -p $(DESTDIR)$(BINDIR)
 	cp cproc cproc-qbe $(DESTDIR)$(BINDIR)
 	mkdir -p $(DESTDIR)$(MANDIR)/man1
-	cp cproc.1 $(DESTDIR)$(MANDIR)/man1
+	cp ./docs/cproc.1 $(DESTDIR)$(MANDIR)/man1
 
 clean:
 	rm -rf cproc cproc-qbe $(BUILDDIR)
